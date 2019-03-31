@@ -1,0 +1,15 @@
+	
+
+	Bot per geomatica:
+
+	API NASA
+	- usare le API Neo-Feed per recuperare una lista di asteroidi in base alla loro data di avvicinamento più vicina alla Terra.
+	- usare le API Neo-Ricerca per cercare uno specifico asteroide con l'id
+	- è interessante catturare delle immagini con l'api di EPICO di prospettive di alcuni eventi astronomici
+	- è interressante utilizzare EONET per catturare immagini e fornire una fonte curata di metadati di eventi naturali continuamente 		  aggiornati (sito in preferiti)
+	- utilizzare l'api IMMAGINI per recuperare l'immagine Landsat 8 per la posizione e la data fornite 
+	- utilizzare l'API Archivio Exoplanet per accedere al DB. Le info da estrapolare si riferiscono a pianeti e Keplero - forse un po vago 		  (sito in preferiti)
+	VEDERE SE CI SONO ALTRE API UTILI DELLA NASA
+	
+	API GIS
+	Vedi siti in preferiti
