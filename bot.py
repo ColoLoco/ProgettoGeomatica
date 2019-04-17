@@ -5,10 +5,17 @@ from telepot.namedtuple import ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineK
 import xlrd
 
 #Dizionari
-nameFile = {}
 user_state = {}
 bank = {}
 count = {}
+nameFile = {}
+
+#Banche OK
+#Fermate OK
+#Assicurazioni OK
+#Ristoranti OK
+#Tartufi  OK
+#Sport OK
 
 def on_chat_message(msg):
 
@@ -41,7 +48,7 @@ def on_chat_message(msg):
 
 	txt = msg['text']
 	#Start
-	if 'text' in msg and msg['text'] == '/start':
+	if 'text' in msg and msg['text'] == '/start' or user_state[chat_id] == 100:
 		markup = ReplyKeyboardMarkup(keyboard=[[("Cerca per luogo 🏔"),("Cerca per punto di interesse 🌆")]])
 		bot.sendMessage(chat_id, "Benvenuto "+username+" su GeoBot!\nQui puoi visitare i luoghi e i punti di interesse che sono stati mappati!", 
 			reply_markup = markup)
@@ -51,7 +58,7 @@ def on_chat_message(msg):
 	#Ricerca per punto di interesse
 	elif txt.startswith("Cerca per punto di interesse"):
 		markup = ReplyKeyboardMarkup(keyboard=[[("Amministrazione"),("Sicurezza"),("Sanita'")],[("Servizi Culturali"),("Banche"),("Istruzione")],
-			[("Sport"),("Fermate Bus"),("Svago")],[("Negozi"),("Alberghi"),("Tartufi")],[("Assicurazione"),("Ristoranti")]])
+			[("Sport"),("Fermate Bus"),("Svago")],[("Negozi"),("Alberghi"),("Tartufi")],[("Assicurazioni"),("Ristoranti")]])
 		bot.sendMessage(chat_id, "Ecco i punti di interrese che puoi cercare:", reply_markup=markup)
 	#Acqualagna
 	elif txt.startswith("/Acqualagna"):
@@ -78,22 +85,29 @@ def on_chat_message(msg):
 	elif txt.startswith("Servizi"):
 		bot.sendMessage(chat_id, 'ok')
 	#Banche
-	elif txt.startswith("Banche") or txt.startswith("Assicurazione"):
-		result = extract_fileBanche(txt)
+	elif txt.startswith("Banche") or txt.startswith("Assicurazioni"):
+		result = extract_file(txt)
                 bot.sendMessage(chat_id, '*Digita il numero per avere maggiori informazioni.*\n'+result, parse_mode="Markdown")
                 
                 user_state[chat_id] = 1
-                nameFile = "Banche"
+                if txt.startswith("Banche"):
+                    nameFile[chat_id] = "Banche"
+                else:
+                    nameFile[chat_id] = "Assicurazioni"
 		#vedi sito https://www.geeksforgeeks.org/reading-excel-file-using-python/
 	#Istruzione
 	elif txt.startswith("Istruzione"):
 		bot.sendMessage(chat_id, 'ok')
 	#Sport
 	elif txt.startswith("Sport"):
-		bot.sendMessage(chat_id, 'ok')
-	#Fermate
+		result = extract_file(txt)
+                bot.sendMessage(chat_id, '*Digita il numero per avere maggiori informazioni.*\n'+result, parse_mode="Markdown")
+                
+                user_state[chat_id] = 9
+                nameFile[chat_id] = "Sport"
+        #Fermate
 	elif txt.startswith("Fermate"):
-		result = extract_fileBanche(txt)
+		result = extract_file(txt)
                 bot.sendMessage(chat_id, '*Digita il numero per avere maggiori informazioni.*\n'+result, parse_mode="Markdown")
                 
                 nameFile[chat_id] = "Fermate Bus"
@@ -103,7 +117,11 @@ def on_chat_message(msg):
 		bot.sendMessage(chat_id, 'ok')
 	#Ristoranti
 	elif txt.startswith("Ristoranti"):
-		bot.sendMessage(chat_id, 'ok')
+		result = extract_file(txt)
+                bot.sendMessage(chat_id, '*Digita il numero per avere maggiori informazioni.*\n'+result, parse_mode="Markdown")
+                
+                nameFile[chat_id] = "Ristoranti"
+                user_state[chat_id] = 5
 	#Negozi
 	elif txt.startswith("Negozi"):
 		bot.sendMessage(chat_id, 'ok')
@@ -112,7 +130,11 @@ def on_chat_message(msg):
 		bot.sendMessage(chat_id, 'ok')
 	#Tartufi
 	elif txt.startswith("Tartufi"):	
-		bot.sendMessage(chat_id, 'ok')
+		result = extract_file(txt)
+                bot.sendMessage(chat_id, '*Digita il numero per avere maggiori informazioni.*\n'+result, parse_mode="Markdown")
+                
+                nameFile[chat_id] = "Tartufi"
+                user_state[chat_id] = 7
         #1 - Banche
         elif user_state[chat_id] == 1:
             txt = msg['text']
@@ -121,7 +143,7 @@ def on_chat_message(msg):
 
             if txt.isnumeric() and int(txt) <= sheet.nrows-1 and  int(txt) > 0:
                   count[chat_id] = int(txt)
-                  markup = ReplyKeyboardMarkup(keyboard=[[("Orario"),("Note"),("Foto"),("ATM")],[("Telefono"),("Sito")]])
+                  markup = ReplyKeyboardMarkup(keyboard=[[("Orario"),("Note"),("Foto"),("ATM")],[("Telefono"),("Sito"),('Home')]])
                   bot.sendMessage(chat_id, 'Ecco cosa puoi visualizzare:', reply_markup=markup)
                   user_state[chat_id] = 2
             else:
@@ -133,25 +155,25 @@ def on_chat_message(msg):
             sheet = wb.sheet_by_index(0) 
             #estraggo le informazioni
             if txt.startswith("Orario"):
-                bot.sendMessage(chat_id, "Orario: "+str(sheet.cell_value(count[chat_id],2)))
+                 bot.sendMessage(chat_id, "Orario: "+ sheet.cell_value(count[chat_id],7))
+                        
             elif txt.startswith("Note"):
-                 bot.sendMessage(chat_id, "Note: "+sheet.cell_value(count[chat_id],7)+"\n")
+                 bot.sendMessage(chat_id, "Note: "+sheet.cell_value(count[chat_id],6)+"\n")
             elif txt.startswith("Foto"):
-                 bot.sendMessage(chat_id, "Foto: "+sheet.cell_value(count[chat_id],6)+"\n")
+                 bot.sendMessage(chat_id, "Foto: "+sheet.cell_value(count[chat_id],5)+"\n")
             elif txt.startswith("ATM"):
-                 result = sheet.cell_value(count[chat_id],3)
+                 result = sheet.cell_value(count[chat_id],2)
                  if result == 0:
                      bot.sendMessage(chat_id, "Non è presente")
                  else:
                      bot.sendMessage(chat_id, "E' presente")
             elif txt.startswith("Sito"):
-                keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="Sito web",url=sheet.cell_value(count[chat_id],5))],])
+                keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="Sito web",url=sheet.cell_value(count[chat_id],4))],])
                 bot.sendMessage(chat_id, "Ecco il sito:"+"\n", reply_markup=keyboard)
-
             elif txt.startswith("Telefono"):
-                bot.sendMessage(chat_id, "Telefono: "+str(sheet.cell_value(count[chat_id],4)))
-            elif txt.startswith("Indietro"):
-                print('bho') 
+                bot.sendMessage(chat_id, "Telefono: "+str(sheet.cell_value(count[chat_id],3)))
+            elif txt.startswith("Home"):
+                home(chat_id,username)
         #3 - Fermate            
         elif user_state[chat_id] == 3:
             txt = msg['text']
@@ -165,7 +187,7 @@ def on_chat_message(msg):
                   user_state[chat_id] = 4
             else:
                   bot.sendMessage(chat_id, 'Formato errato!')
-        #3 - Fermate            
+        #4 - Fermate            
         elif user_state[chat_id] == 4:
             txt = msg['text']
             wb = xlrd.open_workbook('file.xls/'+nameFile[chat_id]+'.xls')
@@ -182,14 +204,123 @@ def on_chat_message(msg):
             elif txt.startswith("Sito"):
                 keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="Sito web",url=sheet.cell_value(count[chat_id],3))],])
                 bot.sendMessage(chat_id, "Ecco il sito:"+"\n", reply_markup=keyboard)
-            elif txt.startswith("Indietro"):
-                print('bho') 
+            elif txt.startswith("Home"):
+                home(chat_id,username)
+        #5 - Ristoranti            
+        elif user_state[chat_id] == 5:
+            txt = msg['text']
+            wb = xlrd.open_workbook('file.xls/'+nameFile[chat_id]+'.xls')
+            sheet = wb.sheet_by_index(0) 
+
+            if txt.isnumeric() and int(txt) <= sheet.nrows-1 and  int(txt) > 0:
+                  count[chat_id] = int(txt)
+                  markup = ReplyKeyboardMarkup(keyboard=[[("Specialita"),("Orari"),("Telefono")],[("Sito"),("Note"),("Foto"),("Home")]])
+                  bot.sendMessage(chat_id, 'Ecco cosa puoi visualizzare:', reply_markup=markup)
+                  user_state[chat_id] = 6
+            else:
+                  bot.sendMessage(chat_id, 'Formato errato!')
+        #6 - Ristoranti            
+        elif user_state[chat_id] == 6:
+            txt = msg['text']
+            wb = xlrd.open_workbook('file.xls/'+nameFile[chat_id]+'.xls')
+            sheet = wb.sheet_by_index(0) 
+            #estraggo le informazioni
+            if txt.startswith("Note"):
+                 bot.sendMessage(chat_id, "Info: "+sheet.cell_value(count[chat_id],7)+"\n")
+            elif txt.startswith("Orari"):
+                 bot.sendMessage(chat_id, "Orari: "+sheet.cell_value(count[chat_id],3)+"\n")
+            elif txt.startswith("Specialita"):
+                bot.sendMessage(chat_id, "Specialita': "+deEmojify(sheet.cell_value(count[chat_id],2)+"\n"))
+            elif txt.startswith("Foto"):
+                 bot.sendMessage(chat_id, "Foto: "+sheet.cell_value(count[chat_id],6)+"\n")
+            elif txt.startswith("Sito"):
+                try:
+                    keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="Sito web",url=sheet.cell_value(count[chat_id],5))],])
+                    bot.sendMessage(chat_id, "Ecco il sito:"+"\n", reply_markup=keyboard)
+                except:
+                    bot.sendMessage(chat_id, "Non è presente il sito!")
+            elif txt.startswith("Telefono"):
+                bot.sendMessage(chat_id, "Telefono: "+str(sheet.cell_value(count[chat_id],4)))    
+            elif txt.startswith("Home"):
+                home(chat_id,username)
+        #7 - Tartufi           
+        elif user_state[chat_id] == 7:
+            txt = msg['text']
+            wb = xlrd.open_workbook('file.xls/'+nameFile[chat_id]+'.xls')
+            sheet = wb.sheet_by_index(0) 
+
+            if txt.isnumeric() and int(txt) <= sheet.nrows-1 and  int(txt) > 0:
+                  count[chat_id] = int(txt)
+                  markup = ReplyKeyboardMarkup(keyboard=[[("Orario"),("Note"),("Foto")],[("Telefono"),("Sito"),('Home')]])
+                  bot.sendMessage(chat_id, 'Ecco cosa puoi visualizzare:', reply_markup=markup)
+                  user_state[chat_id] = 8
+            else:
+                  bot.sendMessage(chat_id, 'Formato errato!')
+        #8 - Tartufi            
+        elif user_state[chat_id] == 8:
+            txt = msg['text']
+            wb = xlrd.open_workbook('file.xls/'+nameFile[chat_id]+'.xls')
+            sheet = wb.sheet_by_index(0) 
+            #estraggo le informazioni
+            if txt.startswith("Orario"):
+                 bot.sendMessage(chat_id, "Orario: "+ sheet.cell_value(count[chat_id],6))
+            elif txt.startswith("Note"):
+                 bot.sendMessage(chat_id, "Note: "+sheet.cell_value(count[chat_id],5)+"\n")
+            elif txt.startswith("Foto"):
+                 bot.sendMessage(chat_id, "Foto: "+sheet.cell_value(count[chat_id],4)+"\n")
+            elif txt.startswith("Sito"):
+                try:
+                    keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="Sito web",url=sheet.cell_value(count[chat_id],3))],])
+                    bot.sendMessage(chat_id, "Ecco il sito:"+"\n", reply_markup=keyboard)
+                except:
+                    bot.sendMessage(chat_id, "Non è presente il sito!")
+            elif txt.startswith("Telefono"):
+                bot.sendMessage(chat_id, "Telefono: "+str(sheet.cell_value(count[chat_id],2)))
+            elif txt.startswith("Home"):
+                home(chat_id,username)
+        #9 - Sport            
+        elif user_state[chat_id] == 9:
+            txt = msg['text']
+            wb = xlrd.open_workbook('file.xls/'+nameFile[chat_id]+'.xls')
+            sheet = wb.sheet_by_index(0) 
+            if txt.isnumeric() and int(txt) <= sheet.nrows-1 and  int(txt) > 0:
+                  count[chat_id] = int(txt)
+                  markup = ReplyKeyboardMarkup(keyboard=[[("Riparato"),("Tipologia")],[("Foto"),("Note"),("Home")]])
+                  bot.sendMessage(chat_id, 'Ecco cosa puoi visualizzare:', reply_markup=markup)
+                  user_state[chat_id] = 10
+            else:
+                  bot.sendMessage(chat_id, 'Formato errato!')
+        #10 - Sport            
+        elif user_state[chat_id] == 10:
+            txt = msg['text']
+            wb = xlrd.open_workbook('file.xls/'+nameFile[chat_id]+'.xls')
+            sheet = wb.sheet_by_index(0) 
+            #estraggo le informazioni
+            if txt.startswith("Note"):
+                 bot.sendMessage(chat_id, "Note: "+sheet.cell_value(count[chat_id],5)+"\n")
+            elif txt.startswith("Foto"):
+                 bot.sendMessage(chat_id, "Foto: "+sheet.cell_value(count[chat_id],4)+"\n")
+            elif txt.startswith("Riparato"):
+                 result = sheet.cell_value(count[chat_id],3)
+                 if result == 0:
+                     bot.sendMessage(chat_id, "Non è presente")
+                 else:
+                     bot.sendMessage(chat_id, "E' presente")
+            elif txt.startswith("Tipologia"):
+                 bot.sendMessage(chat_id, "Tipologia: "+sheet.cell_value(count[chat_id],2)+"\n")
+            elif txt.startswith("Home"):
+                home(chat_id,username)
+
+        
+          
+
+    
 
           
 
 
-
-def extract_fileBanche(txt):
+# estrae i dati xls da banche, fermmate,assicurazioni 
+def extract_file(txt):
 
         # Give the location of the file  
         wb = xlrd.open_workbook('file.xls/'+txt+'.xls') 
@@ -203,6 +334,15 @@ def extract_fileBanche(txt):
             count += 1  
 
 	return txt
+
+def home(chat_id,username):
+    markup = ReplyKeyboardMarkup(keyboard=[[("Cerca per luogo 🏔"),("Cerca per punto di interesse 🌆")]])
+    bot.sendMessage(chat_id, "Benvenuto "+username+" su GeoBot!\nQui puoi visitare i luoghi e i punti di interesse che sono stati mappati!", 
+		 reply_markup = markup)
+    user_state[chat_id] = 100
+
+def deEmojify(inputString):
+    return inputString.encode('ascii', 'ignore').decode('ascii')    
 	
 # MAIN
 print("Avvio GeoBot!")
