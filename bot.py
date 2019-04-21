@@ -121,8 +121,9 @@ def on_chat_message(msg):
         #1 - Banche
         elif user_state[chat_id] == 1:
             txt = msg['text']
-            markup = ReplyKeyboardMarkup(keyboard=[[("Orario"),("Note"),("Foto"),("ATM")],[("Telefono"),("Sito"),('Home')]])
-            keyboardCategory(txt, markup, 2, chat_id)
+            markup = ReplyKeyboardMarkup(keyboard=[[("Orario 🕒"),("Note 🗒️"),("Foto  📷"),("ATM 🏧")],[("Telefono 📱"),
+                ("Sito ℹ️"),('Home 🏠')],[("Lista 📝")]])
+            keyboardCategory(txt, markup, 2, chat_id, username)
         #2 - Banche            
         elif user_state[chat_id] == 2:
             txt = msg['text']
@@ -148,12 +149,14 @@ def on_chat_message(msg):
             elif txt.startswith("Telefono"):
                 bot.sendMessage(chat_id, "Telefono: "+str(sheet.cell_value(count[chat_id],3)))
             elif txt.startswith("Home"):
-                home(chat_id,username)
+                home(chat_id)
+            elif txt.startswith("Lista"):
+                initialCategory("Banche", 1, "Banche", chat_id)
         #3 - Fermate            
         elif user_state[chat_id] == 3:
             txt = msg['text']
-            markup = ReplyKeyboardMarkup(keyboard=[[("Riparata"),("Sito")],[("Note"),("Home")]])
-            keyboardCategory(txt, markup, 4, chat_id)
+            markup = ReplyKeyboardMarkup(keyboard=[[("Riparata ☂️"),("Sito ℹ️")],[("Note 🗒️"),("Home 🏠")],[("Lista 📝")]])
+            keyboardCategory(txt, markup, 4, chat_id, username)
         #4 - Fermate            
         elif user_state[chat_id] == 4:
             txt = msg['text']
@@ -172,12 +175,15 @@ def on_chat_message(msg):
                 keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="Sito web",url=sheet.cell_value(count[chat_id],3))],])
                 bot.sendMessage(chat_id, "Ecco il sito:"+"\n", reply_markup=keyboard)
             elif txt.startswith("Home"):
-                home(chat_id,username)
+                home(chat_id)
+            elif txt.startswith("Lista"):
+                initialCategory("Fermate Bus", 3, "Fermate Bus", chat_id)    
         #5 - Ristoranti            
         elif user_state[chat_id] == 5:
             txt = msg['text']
-            markup = ReplyKeyboardMarkup(keyboard=[[("Specialita"),("Orari"),("Telefono")],[("Sito"),("Note"),("Foto"),("Home")]])
-            keyboardCategory(txt, markup, 6, chat_id) 
+            markup = ReplyKeyboardMarkup(keyboard=[[("Specialita 🍽️"),("Orario 🕒"),("Telefono 📱")],
+                [("Sito ℹ️"),("Note 🗒️"),("Foto 📷"),("Home 🏠")],[("Lista 📝")]])
+            keyboardCategory(txt, markup, 6, chat_id, username) 
         #6 - Ristoranti            
         elif user_state[chat_id] == 6:
             txt = msg['text']
@@ -186,7 +192,7 @@ def on_chat_message(msg):
             #estraggo le informazioni
             if txt.startswith("Note"):
                  bot.sendMessage(chat_id, "Info: "+sheet.cell_value(count[chat_id],7)+"\n")
-            elif txt.startswith("Orari"):
+            elif txt.startswith("Orario"):
                  bot.sendMessage(chat_id, "Orari: "+sheet.cell_value(count[chat_id],3)+"\n")
             elif txt.startswith("Specialita"):
                 bot.sendMessage(chat_id, "Specialita': "+deEmojify(sheet.cell_value(count[chat_id],2)+"\n"))
@@ -201,12 +207,14 @@ def on_chat_message(msg):
             elif txt.startswith("Telefono"):
                 bot.sendMessage(chat_id, "Telefono: "+str(sheet.cell_value(count[chat_id],4)))    
             elif txt.startswith("Home"):
-                home(chat_id,username)
+                home(chat_id)
+            elif txt.startswith("Lista"):
+                initialCategory("Ristoranti", 5, "Ristoranti", chat_id)                
         #7 - Tartufi           
         elif user_state[chat_id] == 7:
             txt = msg['text']
-            markup = ReplyKeyboardMarkup(keyboard=[[("Orario"),("Note"),("Foto")],[("Telefono"),("Sito"),('Home')]])
-            keyboardCategory(txt, markup, 8, chat_id)
+            markup = ReplyKeyboardMarkup(keyboard=[[("Orario 🕒"),("Note 🗒️"),("Foto 📷")],[("Telefono 📱"),("Sito ℹ️"),('Home 🏠')],["Lista 📝"]])
+            keyboardCategory(txt, markup, 8, chat_id, username)
         #8 - Tartufi            
         elif user_state[chat_id] == 8:
             txt = msg['text']
@@ -228,12 +236,14 @@ def on_chat_message(msg):
             elif txt.startswith("Telefono"):
                 bot.sendMessage(chat_id, "Telefono: "+str(sheet.cell_value(count[chat_id],2)))
             elif txt.startswith("Home"):
-                home(chat_id,username)
+                home(chat_id)
+            elif txt.startswith("Lista"):
+                initialCategory("Tartufi", 7, "Tartufi", chat_id)
         #9 - Sport            
         elif user_state[chat_id] == 9:
             txt = msg['text']
-            markup = ReplyKeyboardMarkup(keyboard=[[("Riparato"),("Tipologia")],[("Foto"),("Note"),("Home")]])
-            keyboardCategory(txt, markup, 10, chat_id)
+            markup = ReplyKeyboardMarkup(keyboard=[[("Riparato ☂️"),("Tipologia")],[("Foto 📷"),("Note 🗒️"),("Home 🏠")],["Lista 📝"]])
+            keyboardCategory(txt, markup, 10, chat_id, username)
         #10 - Sport            
         elif user_state[chat_id] == 10:
             txt = msg['text']
@@ -253,12 +263,14 @@ def on_chat_message(msg):
             elif txt.startswith("Tipologia"):
                  bot.sendMessage(chat_id, "Tipologia: "+sheet.cell_value(count[chat_id],2)+"\n")
             elif txt.startswith("Home"):
-                home(chat_id,username)
+                home(chat_id)
+            elif txt.startswith("Lista"):
+                initialCategory("Sport", 9, "Sport", chat_id)
         #11 - Musei           
         elif user_state[chat_id] == 11:
             txt = msg['text']
-            markup = ReplyKeyboardMarkup(keyboard=[[("Orari"),("Telefono"),("Sito")],[("Foto"),("Note"),("Home")]])
-            keyboardCategory(txt, markup, 12, chat_id)
+            markup = ReplyKeyboardMarkup(keyboard=[[("Orario 🕒"),("Telefono 📱"),("Sito ℹ️")],[("Foto  📷"),("Note 🗒️"),("Home 🏠")],["Lista 📝"]])
+            keyboardCategory(txt, markup, 12, chat_id, username)
         #12 - Musei            
         elif user_state[chat_id] == 12:
             txt = msg['text']
@@ -269,7 +281,7 @@ def on_chat_message(msg):
                  bot.sendMessage(chat_id, "Note: "+sheet.cell_value(count[chat_id],6)+"\n")
             elif txt.startswith("Foto"):
                  bot.sendMessage(chat_id, "Foto: "+sheet.cell_value(count[chat_id],5)+"\n")
-            elif txt.startswith("Orari"):
+            elif txt.startswith("Orario"):
                   bot.sendMessage(chat_id, "Orario: "+sheet.cell_value(count[chat_id],2)+"\n")           
             elif txt.startswith("Telefono"):
                  bot.sendMessage(chat_id, "Telefono: "+sheet.cell_value(count[chat_id],3)+"\n")
@@ -280,12 +292,14 @@ def on_chat_message(msg):
                 except:
                     bot.sendMessage(chat_id, "Non è presente il sito!")    
             elif txt.startswith("Home"):
-                home(chat_id,username)   
+                home(chat_id)   
+            elif txt.startswith("Lista"):
+                initialCategory("Musei", 11, "Musei", chat_id)
         #13 - Svago         
         elif user_state[chat_id] == 13:
             txt = msg['text']
-            markup = ReplyKeyboardMarkup(keyboard=[[("Tipologia"),("Riparato"),("Foto")],[("Note"),("Home")]])
-            keyboardCategory(txt, markup, 14, chat_id)
+            markup = ReplyKeyboardMarkup(keyboard=[[("Tipologia"),("Riparato ☂️"),("Foto  📷")],[("Note 🗒️"),("Home 🏠")],[("Lista 📝")]])
+            keyboardCategory(txt, markup, 14, chat_id, username)
         #14 - Svago            
         elif user_state[chat_id] == 14:
             txt = msg['text']
@@ -305,12 +319,15 @@ def on_chat_message(msg):
             elif txt.startswith("Tipologia"):
                  bot.sendMessage(chat_id, "Tipologia: "+sheet.cell_value(count[chat_id],2)+"\n")
             elif txt.startswith("Home"):
-                home(chat_id,username)
+                home(chat_id)
+            elif txt.startswith("Lista"):
+                initialCategory("Svago", 13, "Svago", chat_id)
         #15 - Negozi            
         elif user_state[chat_id] == 15:
             txt = msg['text']
-            markup = ReplyKeyboardMarkup(keyboard=[[("Tipologia"),("Orari"),("Foto"),("Sito")],[("Note"),("Telefono"),("Home")]])
-            keyboardCategory(txt, markup, 16, chat_id)
+            markup = ReplyKeyboardMarkup(keyboard=[[("Tipologia"),("Orario 🕒"),("Foto  📷"),("Sito ℹ️")],
+                [("Note 🗒️"),("Telefono 📱"),("Home 🏠")],[("Lista 📝")]])
+            keyboardCategory(txt, markup, 16, chat_id, username)
         #16 - Negozi           
         elif user_state[chat_id] == 16:
             wb = xlrd.open_workbook('file.xls/'+nameFile[chat_id]+'.xls')
@@ -320,7 +337,7 @@ def on_chat_message(msg):
                  bot.sendMessage(chat_id, "Note: "+sheet.cell_value(count[chat_id],7)+"\n")
             elif txt.startswith("Foto"):
                  bot.sendMessage(chat_id, "Foto: "+sheet.cell_value(count[chat_id],6)+"\n")
-            elif txt.startswith("Orari"):
+            elif txt.startswith("Orario"):
                   bot.sendMessage(chat_id, "Orario: "+sheet.cell_value(count[chat_id],3)+"\n")           
             elif txt.startswith("Telefono"):
                  bot.sendMessage(chat_id, "Telefono: "+sheet.cell_value(count[chat_id],4)+"\n")
@@ -333,12 +350,14 @@ def on_chat_message(msg):
                 except:
                     bot.sendMessage(chat_id, "Non è presente il sito!")    
             elif txt.startswith("Home"):
-                home(chat_id,username) 
+                home(chat_id) 
+            elif txt.startswith("Lista"):
+                initialCategory("Negozi", 15, "Negozi", chat_id)
         #17 - Alberghi           
         elif user_state[chat_id] == 17:  
             txt = msg['text']
-            markup = ReplyKeyboardMarkup(keyboard=[[("Telefono"),("Foto")],[("Note"),("Sito"),("Home")]])
-            keyboardCategory(txt, markup, 18, chat_id)
+            markup = ReplyKeyboardMarkup(keyboard=[[("Telefono 📱"),("Foto  📷")],[("Note 🗒️"),("Sito ℹ️"),("Home 🏠")],[("Lista 📝")]])
+            keyboardCategory(txt, markup, 18, chat_id, username)
         #18 - Alberghi           
         elif user_state[chat_id] == 18:
             txt = msg['text']
@@ -358,7 +377,9 @@ def on_chat_message(msg):
                 except:
                     bot.sendMessage(chat_id, "Non è presente il sito!")    
             elif txt.startswith("Home"):
-                home(chat_id,username)
+                home(chat_id)
+            elif txt.startswith("Lista"):
+                initialCategory("Alberghi", 17, "Alberghi", chat_id)
 
             
 
@@ -389,21 +410,23 @@ def initialCategory(name, user, txt, chat_id):
     nameFile[chat_id] = name
 
 #stampa i pulsanti specifici per il tipo di locale/servizio per la categoria scelta
-def keyboardCategory(txt, markup, user, chat_id):
+def keyboardCategory(txt, markup, user, chat_id, username):
     wb = xlrd.open_workbook('file.xls/'+nameFile[chat_id]+'.xls')
     sheet = wb.sheet_by_index(0) 
     if txt.isnumeric() and int(txt) <= sheet.nrows-1 and  int(txt) > 0:
           count[chat_id] = int(txt)
           bot.sendMessage(chat_id, 'Ecco cosa puoi visualizzare:', reply_markup=markup)
           user_state[chat_id] = user
+    elif txt.startswith("Home"):
+          home(chat_id)      
     else:
           bot.sendMessage(chat_id, 'Formato errato!')
 
 # si ritorna alla home
-def home(chat_id,username):
-    markup = ReplyKeyboardMarkup(keyboard=[[("Cerca per luogo 🏔"),("Cerca per punto di interesse 🌆")]])
-    bot.sendMessage(chat_id, "Benvenuto "+username+" su GeoBot!\nQui puoi visitare i luoghi e i punti di interesse che sono stati mappati!", 
-    		 reply_markup = markup)
+def home(chat_id):
+   markup = ReplyKeyboardMarkup(keyboard=[[("Amministrazione"),("Sicurezza"),("Sanita'")],[("Musei"),("Banche"),("Istruzione")],
+			[("Sport"),("Fermate Bus"),("Svago")],[("Negozi"),("Alberghi"),("Tartufi")],[("Assicurazioni"),("Ristoranti")]])
+   bot.sendMessage(chat_id, "Ecco i punti di interrese che puoi cercare:", reply_markup=markup)
 #pulisce la stringa da caratteri non ascii
 def deEmojify(inputString):
     return inputString.encode('ascii', 'ignore').decode('ascii')    
