@@ -1,0 +1,61 @@
+***HO AGGIUNTO NEL LAYER UNA FERMATA CHE HO TROVATO DA GOOGLE MPAS (QUINDI SENZA GPX)***
+
+1-	http://www.adriabus.eu/viewdoc.asp?CO_ID=13393
+	0
+
+
+2-	http://www.adriabus.eu/viewdoc.asp?CO_ID=13393
+	0
+
+
+3-	http://www.adriabus.eu/viewdoc.asp?CO_ID=13393
+	1
+
+
+4-	http://www.adriabus.eu/viewdoc.asp?CO_ID=13393
+	0
+
+
+5-	http://www.adriabus.eu/viewdoc.asp?CO_ID=13393
+	1
+
+
+6-	http://www.adriabus.eu/viewdoc.asp?CO_ID=13393
+	0	
+	
+
+7(stazione corr. acqualagna)-	http://www.adriabus.eu/viewdoc.asp?CO_ID=13393
+	1	
+	E' presente sia un ufficio informazioni che una biglietteria.
+
+8-	http://www.adriabus.eu/viewdoc.asp?CO_ID=13393
+	0
+	N/D	
+	
+9-	http://www.adriabus.eu/viewdoc.asp?CO_ID=13393
+	0
+	
+
+10-	http://www.adriabus.eu/viewdoc.asp?CO_ID=13393
+	1
+	
+
+11-	http://www.adriabus.eu/viewdoc.asp?CO_ID=13393
+	0
+	
+
+12-	http://www.adriabus.eu/viewdoc.asp?CO_ID=13393
+	1
+	N/D
+
+13-	http://www.adriabus.eu/viewdoc.asp?CO_ID=13393
+	0
+	N/D
+
+14	http://www.adriabus.eu/viewdoc.asp?CO_ID=13393
+	1
+	Fermata ben collegata alle grandi città della zona, come Urbino, Fano e Pesaro.
+
+15-	http://www.adriabus.eu/viewdoc.asp?CO_ID=13393
+	0
+	Fermata ben collegata alle grandi città della zona, come Urbino, Fano e Pesaro.

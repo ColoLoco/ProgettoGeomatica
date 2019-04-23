@@ -1,0 +1,36 @@
+1-	Bocce
+	S.S.D. Bocciofila Acqualagnese
+	1
+
+	Il servizio sportivo si trova all'interno di una struttura in cui è presente anche un bar.
+
+
+2-	Nuoto
+	A.S.D. Palaferro Sport Acqualagna
+	1
+
+	Per arrivare alla piscina occorre entrare dall'ingresso di destra del palazzetto dello sport.
+
+3- 	Pallacanestro
+	A.S.D. Pallacanestro Acqualagna
+	1	
+
+	Per arrivare al campo occorre entrare dall'ingresso di sinistra del palazzetto dello sport.
+
+4-	Pallavolo
+	A.S.D. Volley Acqualagna
+	1
+
+	Per arrivare al campo occorre entrare dall'ingresso di sinistra del palazzetto dello sport.
+
+5-	Calcetto
+	A.S.D. Acqualagna Calcio a 5
+	0
+
+	E' presente sia un campo interno che esterno al palazzetto, bagni e spogliatoi invece sono entrambi interni.
+
+6-	Calcio
+	U.S.D Falco Acqualagna
+	0
+
+	Campo in erba costruito recentemente, comprensivo di tribune coperte.
