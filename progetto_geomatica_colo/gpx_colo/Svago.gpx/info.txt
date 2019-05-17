@@ -1,0 +1,46 @@
+***impostare layer come creazione poligoni***
+
+
+1-	Parco avventura	
+	Parco Avventura del Furlo
+	0
+	
+	Sito ufficiale:    https://www.facebook.com/ParcoAvventuradelFurlo
+
+2-	Parco pubblico	
+	Parco Pubblico "La Golena"
+	0
+	
+	Parco molto ampio e circondato da un parcheggio, vi è la presenza di un bagno pubblico e di alcuni giochi per bambini. Molto consigliato per picnic.
+
+3-	Parco privato
+	Parco de "La Locanda dell'Abbazia"
+	0
+	
+	Parco privato appartenente al chiosco situato lì vicino. Oltre alla presenza di un bel manto erboso ci sono anche dei giochi per bambini.
+	
+4-	Parco pubblico
+	Parco Pubblico vicino al Palazzetto
+	0
+	
+	Parco pubblico composto da un bel manto erboso e con la presenza di numerosi giochi per bambini.
+	
+	
+5-	Cinema
+	Cinema "Antonio Conti"
+	1
+
+	Sito ufficiale:    https://www.facebook.com/cinema.acqualagna
+
+6-	Parco pubblico
+	Parco Pubblico interno ad Acqualagna
+	0
+	
+	Parco pubblico interno ad Acqualagna e di dimensioni contenute, sono presenti pochi giochi per i bambini.
+	
+7-	Campo da Calcio
+	Campo da Calcio della Chiesa
+	N/D
+	0
+	
+	Campo da calcio di proprietà della chiesa affianco, composto in prevalenza da terra battuta. Inoltre è presente una panchina coperta per ogni squadra.
